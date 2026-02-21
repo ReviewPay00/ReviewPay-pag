@@ -1,0 +1,915 @@
+﻿
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ReviewPay - IA para reviews em marketplaces</title>
+    <meta
+      name="description"
+      content="ReviewPay usa IA para captar tarefas em marketplaces. Avalie produtos e receba recompensas com campanhas automatizadas."
+    />
+    <meta
+      name="keywords"
+      content="reviewpay, reviews, marketplaces, shopee, mercado livre, amazon, ia, recompensas"
+    />
+    <meta property="og:title" content="ReviewPay - IA para reviews em marketplaces" />
+    <meta
+      property="og:description"
+      content="Automatize campanhas de review com IA, compliance e recompensas em marketplaces."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://reviewpay.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ReviewPay - IA para reviews em marketplaces" />
+    <meta
+      name="twitter:description"
+      content="ReviewPay capta tarefas em marketplaces e automatiza reviews com IA."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #06060d;
+        --bg-soft: #0b0c16;
+        --panel: rgba(16, 18, 30, 0.78);
+        --border: rgba(255, 255, 255, 0.08);
+        --text-dim: rgba(255, 255, 255, 0.7);
+        --primary: #6d5dfc;
+        --primary-2: #8a6bff;
+        --cyan: #45d6ff;
+        --glow: rgba(109, 93, 252, 0.45);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background: radial-gradient(800px circle at 20% -10%, rgba(109, 93, 252, 0.25), transparent 55%),
+          radial-gradient(600px circle at 80% 10%, rgba(69, 214, 255, 0.18), transparent 50%),
+          var(--bg);
+        color: #fff;
+        min-height: 100vh;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .glass {
+        background: linear-gradient(135deg, rgba(18, 20, 32, 0.92), rgba(12, 13, 22, 0.78));
+        border: 1px solid var(--border);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 20px 60px rgba(8, 8, 18, 0.45);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 26px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        border: 1px solid transparent;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(120deg, var(--primary), var(--primary-2));
+        color: #0c0d18;
+        box-shadow: 0 12px 30px rgba(109, 93, 252, 0.35);
+      }
+
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.15);
+        color: #fff;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px) scale(1.01);
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(6, 6, 13, 0.78);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(16px);
+      }
+
+      .nav {
+        height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-family: "Outfit", system-ui, sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+
+      .logo-badge {
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--primary), var(--cyan));
+        color: #0b0c16;
+        font-weight: 700;
+        box-shadow: 0 0 30px rgba(109, 93, 252, 0.45);
+      }
+
+      .nav-cta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .section {
+        padding: 92px 0;
+      }
+
+      .hero {
+        display: grid;
+        gap: 48px;
+        align-items: center;
+        position: relative;
+      }
+
+      .hero .glow {
+        position: absolute;
+        inset: -120px auto auto -120px;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(circle, rgba(109, 93, 252, 0.4), transparent 65%);
+        filter: blur(20px);
+        z-index: 0;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero h1 {
+        font-family: "Outfit", system-ui, sans-serif;
+        font-size: clamp(2.6rem, 4vw, 4.2rem);
+        line-height: 1.1;
+      }
+
+      .hero h1 span {
+        color: var(--primary-2);
+      }
+
+      .hero p {
+        margin-top: 18px;
+        color: var(--text-dim);
+        font-size: 18px;
+        max-width: 520px;
+      }
+
+      .hero-buttons {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .hero-logos {
+        margin-top: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 13px;
+      }
+
+      .hero-panel {
+        padding: 28px;
+        border-radius: 26px;
+        position: relative;
+        overflow: hidden;
+        animation: floaty 10s ease-in-out infinite;
+      }
+
+      .hero-panel::after {
+        content: "";
+        position: absolute;
+        inset: -40% -40% auto auto;
+        width: 200px;
+        height: 200px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .hero-panel h4 {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .hero-metrics {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .metric-card {
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .metric-card strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 22px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        font-size: 12px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .section-title {
+        font-family: "Outfit", system-ui, sans-serif;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+      }
+
+      .grid-3 {
+        display: grid;
+        gap: 20px;
+      }
+
+      .feature-card {
+        padding: 24px;
+        border-radius: 22px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top, rgba(109, 93, 252, 0.18), transparent 65%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(8, 8, 18, 0.35);
+      }
+
+      .feature-card:hover::before {
+        opacity: 1;
+      }
+
+      .feature-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: rgba(109, 93, 252, 0.2);
+        border: 1px solid rgba(109, 93, 252, 0.4);
+        font-weight: 600;
+        color: var(--primary-2);
+      }
+
+      .feature-card h3 {
+        margin-top: 18px;
+        font-size: 18px;
+      }
+
+      .feature-card p {
+        margin-top: 10px;
+        font-size: 14px;
+        color: var(--text-dim);
+      }
+
+      .module-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .module-card {
+        padding: 26px;
+        border-radius: 20px;
+        background: linear-gradient(140deg, rgba(12, 13, 22, 0.9), rgba(20, 18, 35, 0.85));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        min-height: 170px;
+        display: grid;
+        gap: 12px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .module-card::after {
+        content: "";
+        position: absolute;
+        inset: -60% -60% auto auto;
+        width: 140px;
+        height: 140px;
+        border-radius: 999px;
+        background: rgba(109, 93, 252, 0.18);
+      }
+
+      .module-card h4 {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .module-card span {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .pricing-grid {
+        display: grid;
+        gap: 24px;
+      }
+
+      .price-card {
+        padding: 32px;
+        border-radius: 28px;
+        position: relative;
+      }
+
+      .price-card.highlight {
+        border: 1px solid rgba(109, 93, 252, 0.6);
+        box-shadow: 0 0 40px rgba(109, 93, 252, 0.3);
+      }
+
+      .price-card h3 {
+        font-size: 22px;
+        margin-top: 10px;
+      }
+
+      .price-value {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin-top: 14px;
+        font-size: 36px;
+        font-weight: 600;
+      }
+
+      .price-card ul {
+        list-style: none;
+        margin-top: 18px;
+        display: grid;
+        gap: 10px;
+        color: var(--text-dim);
+        font-size: 14px;
+      }
+
+      .price-card li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--primary-2);
+      }
+
+      .stats-band {
+        margin-top: 60px;
+        padding: 28px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stats-band::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(109, 93, 252, 0.4), transparent);
+        opacity: 0.4;
+      }
+
+      .stats-content {
+        position: relative;
+        text-align: center;
+        display: grid;
+        gap: 14px;
+      }
+
+      .stats-content strong {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        color: var(--primary-2);
+      }
+
+      details {
+        border-radius: 18px;
+        padding: 18px 20px;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+        list-style: none;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 70px 0;
+      }
+
+      .footer-cta {
+        padding: 32px;
+        border-radius: 26px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .footer-bottom {
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 12px;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @keyframes floaty {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+
+      @media (min-width: 768px) {
+        .hero {
+          grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        .grid-3 {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .module-grid {
+          grid-template-columns: repeat(5, minmax(140px, 1fr));
+        }
+
+        .pricing-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-cta {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="logo" href="#topo">
+          <span class="logo-badge">R</span>
+          ReviewPay
+        </a>
+        <div class="nav-cta">
+          <a class="btn btn-ghost" href="#planos">Ver planos</a>
+          <a class="btn btn-primary" href="#contato">Assinar agora</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="topo">
+      <section class="section">
+        <div class="container hero">
+          <span class="glow" aria-hidden="true"></span>
+          <div class="hero-copy reveal">
+            <span class="pill">ReviewPay</span>
+            <h1>
+              Automatize tarefas de review com <span>IA</span> e receba recompensas.
+            </h1>
+            <p>
+              A ReviewPay capta tarefas em diversos marketplaces. Voce avalia produtos e os marketplaces pagam uma recompensa por isso.
+            </p>
+            <div class="hero-buttons">
+              <a class="btn btn-primary" href="#planos">Assinar agora</a>
+              <a class="btn btn-ghost" href="#planos">Ver planos</a>
+              <a class="btn btn-ghost" href="#como-funciona">Area de membros</a>
+            </div>
+            <div class="hero-logos">
+              <span>Marketplaces</span>
+              <span>Shopee</span>
+              <span>Mercado Livre</span>
+              <span>Amazon</span>
+              <span>Magalu</span>
+            </div>
+          </div>
+          <div class="hero-panel glass reveal">
+            <h4>Resumo em tempo real</h4>
+            <div class="hero-metrics">
+              <div class="metric-card">
+                <small>Tarefas ativas</small>
+                <strong>128</strong>
+              </div>
+              <div class="metric-card">
+                <small>Compliance</small>
+                <strong>99.2%</strong>
+              </div>
+            </div>
+            <div class="metric-card" style="margin-top: 16px;">
+              <small>IA ajustando jornadas</small>
+              <strong>+37% qualidade</strong>
+              <p style="margin-top: 8px; color: rgba(255, 255, 255, 0.6); font-size: 13px;">
+                Fluxos otimizados para evitar riscos e aumentar conversao.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="como-funciona" class="section">
+        <div class="container">
+          <div class="reveal" style="max-width: 680px;">
+            <span class="pill">Como funciona</span>
+            <h2 class="section-title" style="margin-top: 16px;">Uma jornada inteligente do briefing ao review</h2>
+            <p style="margin-top: 12px; color: var(--text-dim);">
+              Configure campanhas em minutos, deixe a IA selecionar usuarios ideais e acompanhe performance em dashboards ao vivo.
+            </p>
+          </div>
+          <div class="grid-3" style="margin-top: 36px;">
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">01</div>
+              <h3>Briefing inteligente</h3>
+              <p>Defina metas e restricoes. A IA monta a campanha e ajusta o volume ideal.</p>
+            </div>
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">02</div>
+              <h3>Selecao automatizada</h3>
+              <p>Modelos de score filtram usuarios certos e reduzem fraudes.</p>
+            </div>
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">03</div>
+              <h3>Compliance nativo</h3>
+              <p>Checkpoints por marketplace garantem seguranca e conformidade.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="reveal" style="max-width: 680px;">
+            <span class="pill">Conteudos premium</span>
+            <h2 class="section-title" style="margin-top: 16px;">Modulos premium e exclusivos</h2>
+            <p style="margin-top: 12px; color: var(--text-dim);">
+              Playbooks e treinamentos alinhados com a operacao real de reviews em marketplaces.
+            </p>
+          </div>
+          <div class="module-grid" style="margin-top: 28px;">
+            <div class="module-card reveal">
+              <span>Suporte</span>
+              <h4>Atendimento dedicado</h4>
+              <p style="color: rgba(255,255,255,0.6); font-size: 13px;">Suporte rapido para campanhas e pagamentos.</p>
+            </div>
+            <div class="module-card reveal">
+              <span>Compliance</span>
+              <h4>Politicas atualizadas</h4>
+              <p style="color: rgba(255,255,255,0.6); font-size: 13px;">Regras por marketplace para manter sua conta segura.</p>
+            </div>
+            <div class="module-card reveal">
+              <span>Onboarding</span>
+              <h4>Como acessar tarefas</h4>
+              <p style="color: rgba(255,255,255,0.6); font-size: 13px;">Guia completo para ativar campanhas com IA.</p>
+            </div>
+            <div class="module-card reveal">
+              <span>Configuracoes</span>
+              <h4>Automacoes IA</h4>
+              <p style="color: rgba(255,255,255,0.6); font-size: 13px;">Personalize regras e niveis de risco.</p>
+            </div>
+            <div class="module-card reveal">
+              <span>Performance</span>
+              <h4>Escala e resultados</h4>
+              <p style="color: rgba(255,255,255,0.6); font-size: 13px;">Maximize recompensas com dashboards ao vivo.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="tecnologia" class="section">
+        <div class="container">
+          <div class="reveal" style="max-width: 720px;">
+            <span class="pill">Tecnologia IA</span>
+            <h2 class="section-title" style="margin-top: 16px;">Inteligencia aplicada para escala e previsibilidade</h2>
+            <p style="margin-top: 12px; color: var(--text-dim);">
+              Modelos proprietarios, monitoramento de risco e personalizacao dinamica para cada campanha.
+            </p>
+          </div>
+          <div class="grid-3" style="margin-top: 36px;">
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">AI</div>
+              <h3>Orquestracao preditiva</h3>
+              <p>Preve volume por SKU e ajusta automaticamente para manter ROI.</p>
+            </div>
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">RX</div>
+              <h3>Deteccao de risco</h3>
+              <p>Camadas de seguranca monitoram inconsistencias em tempo real.</p>
+            </div>
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">UX</div>
+              <h3>Personalizacao dinamica</h3>
+              <p>Mensagens e jornadas adaptadas ao perfil do usuario.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="marketplaces" class="section">
+        <div class="container">
+          <div class="reveal" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+            <div>
+              <span class="pill">Marketplaces suportados</span>
+              <h2 class="section-title" style="margin-top: 16px;">Conecte campanhas com os maiores players</h2>
+            </div>
+            <span style="color: rgba(255,255,255,0.6); font-size: 13px;">Novos canais em breve</span>
+          </div>
+          <div class="grid-3" style="margin-top: 36px;">
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">S</div>
+              <h3>Shopee</h3>
+              <p>Fluxos auditados e tarefas prontas para review.</p>
+            </div>
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">M</div>
+              <h3>Mercado Livre</h3>
+              <p>Regras atualizadas e compliance automatico.</p>
+            </div>
+            <div class="feature-card glass reveal">
+              <div class="feature-icon">A</div>
+              <h3>Amazon</h3>
+              <p>Campanhas alinhadas com politicas globais.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="planos" class="section">
+        <div class="container">
+          <div class="reveal" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+            <div>
+              <span class="pill">Planos</span>
+              <h2 class="section-title" style="margin-top: 16px;">Escolha o plano ideal</h2>
+            </div>
+            <span style="color: rgba(255,255,255,0.6); font-size: 13px;">Ative agora e comece a receber recompensas.</span>
+          </div>
+          <div class="pricing-grid" style="margin-top: 36px;">
+            <div class="price-card glass reveal">
+              <span class="pill">Mensal</span>
+              <h3>Plano Basico</h3>
+              <div class="price-value">R$ 149,90 <span style="font-size: 14px; color: rgba(255,255,255,0.6);">/mes</span></div>
+              <p style="margin-top: 12px; color: var(--text-dim); font-size: 14px;">
+                Para quem quer testar a ReviewPay e ja acessar tarefas.
+              </p>
+              <ul>
+                <li><span class="dot"></span>Acesso as tarefas dos marketplaces</li>
+                <li><span class="dot"></span>IA de selecao de campanhas</li>
+                <li><span class="dot"></span>Dashboards e suporte padrao</li>
+                <li><span class="dot"></span>Pagamentos mensais</li>
+              </ul>
+              <div style="margin-top: 22px;">
+                <button class="btn btn-ghost" data-price-id="price_basic_monthly">Escolher este plano</button>
+              </div>
+            </div>
+            <div class="price-card glass highlight reveal">
+              <span class="pill">Vitalicio</span>
+              <h3>Plano Vitalicio</h3>
+              <div class="price-value">R$ 267 <span style="font-size: 14px; color: rgba(255,255,255,0.6);">pagamento unico</span></div>
+              <p style="margin-top: 12px; color: var(--text-dim); font-size: 14px;">
+                Acesso completo com prioridade e bonus vitalicio.
+              </p>
+              <ul>
+                <li><span class="dot"></span>Campanhas ilimitadas e prioridade</li>
+                <li><span class="dot"></span>IA avancada com ajustes automaticos</li>
+                <li><span class="dot"></span>Bonus vitalicio: adicional pago pela plataforma</li>
+                <li><span class="dot"></span>Suporte preferencial e novos modulos</li>
+              </ul>
+              <div style="margin-top: 22px;">
+                <button class="btn btn-primary" data-price-id="price_vip_lifetime">Escolher este plano</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-band glass reveal">
+            <div class="stats-content">
+              <span class="pill">Nossos numeros</span>
+              <strong>+1743</strong>
+              <span style="color: rgba(255,255,255,0.65);">usuarios ativos recebendo recompensas</span>
+              <div>
+                <a class="btn btn-primary" href="#contato">Assinar agora</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="faq" class="section">
+        <div class="container">
+          <div class="reveal" style="max-width: 720px;">
+            <span class="pill">FAQ</span>
+            <h2 class="section-title" style="margin-top: 16px;">Perguntas frequentes</h2>
+            <p style="margin-top: 12px; color: var(--text-dim);">
+              Tire suas duvidas sobre a ReviewPay e seus pagamentos.
+            </p>
+          </div>
+          <div style="margin-top: 30px; display: grid; gap: 14px;">
+            <details class="glass reveal">
+              <summary>Como recebo as recompensas?</summary>
+              <p style="margin-top: 10px; color: var(--text-dim); font-size: 14px;">
+                As recompensas sao liberadas conforme cada tarefa e validada no marketplace.
+              </p>
+            </details>
+            <details class="glass reveal">
+              <summary>Quais marketplaces estao disponiveis?</summary>
+              <p style="margin-top: 10px; color: var(--text-dim); font-size: 14px;">
+                Hoje atendemos Shopee, Mercado Livre e Amazon, com novos canais em breve.
+              </p>
+            </details>
+            <details class="glass reveal">
+              <summary>Preciso de CNPJ para participar?</summary>
+              <p style="margin-top: 10px; color: var(--text-dim); font-size: 14px;">
+                Nao. Voce pode operar como pessoa fisica, seguindo as regras de cada marketplace.
+              </p>
+            </details>
+            <details class="glass reveal">
+              <summary>O plano vitalicio tem bonus?</summary>
+              <p style="margin-top: 10px; color: var(--text-dim); font-size: 14px;">
+                Sim. Usuarios vitalicios recebem um adicional por tarefa concluida.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer id="contato">
+      <div class="container">
+        <div class="footer-cta glass">
+          <span class="pill">O novo comeca agora</span>
+          <h2 class="section-title">Pronto para escalar seus reviews?</h2>
+          <p style="color: var(--text-dim); max-width: 520px;">
+            Agende uma demonstracao com nosso time e veja a ReviewPay em acao.
+          </p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a class="btn btn-primary" href="mailto:contato@reviewpay.com">Assinar agora</a>
+            <a class="btn btn-ghost" href="#planos">Selecionar plano</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="logo-badge">R</span>
+            <span style="font-family: 'Outfit', system-ui, sans-serif; font-weight: 600;">ReviewPay</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+            <a href="#">Privacidade</a>
+            <a href="#">Termos</a>
+            <a href="#">Status</a>
+          </div>
+          <p>Copyright 2026 ReviewPay. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+      document.querySelectorAll('[data-price-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const priceId = button.getAttribute('data-price-id');
+          console.log('Checkout placeholder:', priceId);
+        });
+      });
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "ReviewPay",
+            "url": "https://reviewpay.com"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Como recebo as recompensas?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "As recompensas sao liberadas conforme cada tarefa e validada no marketplace."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Quais marketplaces estao disponiveis?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Hoje atendemos Shopee, Mercado Livre e Amazon, com novos canais em breve."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Preciso de CNPJ para participar?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Nao. Voce pode operar como pessoa fisica, seguindo as regras de cada marketplace."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "O plano vitalicio tem bonus?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Sim. Usuarios vitalicios recebem um adicional por tarefa concluida."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </body>
+</html>
