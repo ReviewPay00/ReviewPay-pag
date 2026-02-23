@@ -540,7 +540,6 @@
         </a>
         <div class="nav-cta">
           <a class="btn btn-ghost" href="#planos">Ver planos</a>
-          <a class="btn btn-primary" href="#contato">Assinar agora</a>
         </div>
       </div>
     </header>
@@ -558,7 +557,6 @@
               A ReviewPay capta tarefas em diversos marketplaces. Voce avalia produtos e os marketplaces pagam uma recompensa por isso.
             </p>
             <div class="hero-buttons">
-              <a class="btn btn-primary" href="#planos">Assinar agora</a>
               <a class="btn btn-ghost" href="#planos">Ver planos</a>
               <a class="btn btn-ghost" href="#como-funciona">Area de membros</a>
             </div>
@@ -740,7 +738,7 @@
                 <li><span class="dot"></span>Pagamentos mensais</li>
               </ul>
               <div style="margin-top: 22px;">
-                <button class="btn btn-ghost" data-price-id="price_basic_monthly">Escolher este plano</button>
+                <a class="btn btn-ghost" href="https://go.perfectpay.com.br/PPU38CQ80T8">Escolher este plano</a>
               </div>
             </div>
             <div class="price-card glass highlight reveal">
@@ -757,7 +755,7 @@
                 <li><span class="dot"></span>Suporte preferencial e novos modulos</li>
               </ul>
               <div style="margin-top: 22px;">
-                <button class="btn btn-primary" data-price-id="price_vip_lifetime">Escolher este plano</button>
+                <a class="btn btn-primary" href="https://go.perfectpay.com.br/PPU38CQ80SS">Escolher este plano</a>
               </div>
             </div>
           </div>
@@ -767,9 +765,6 @@
               <span class="pill">Nossos numeros</span>
               <strong>+1743</strong>
               <span style="color: rgba(255,255,255,0.65);">usuarios ativos recebendo recompensas</span>
-              <div>
-                <a class="btn btn-primary" href="#contato">Assinar agora</a>
-              </div>
             </div>
           </div>
         </div>
@@ -821,7 +816,6 @@
             Agende uma demonstracao com nosso time e veja a ReviewPay em acao.
           </p>
           <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a class="btn btn-primary" href="mailto:contato@reviewpay.com">Assinar agora</a>
             <a class="btn btn-ghost" href="#planos">Selecionar plano</a>
           </div>
         </div>
@@ -853,13 +847,6 @@
       );
 
       document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-
-      document.querySelectorAll('[data-price-id]').forEach((button) => {
-        button.addEventListener('click', () => {
-          const priceId = button.getAttribute('data-price-id');
-          console.log('Checkout placeholder:', priceId);
-        });
-      });
     </script>
 
     <script type="application/ld+json">
